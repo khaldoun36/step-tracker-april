@@ -11,12 +11,11 @@ struct CardContainerView: View {
     let iconName: String
     let title: String
     let subTitle: String
-    let onTap: (() -> Void)? // Optional closure for tap action
 
     var body: some View {
         // Main container for the card content
         VStack(alignment: .leading) { // Align content to the leading edge
-            HStack() { // Align items vertically at the top if needed
+            HStack { // Align items vertically at the top if needed
                 // Content VStack (Label and Subtitle)
                 VStack(alignment: .leading, spacing: 8) {
                     Label(title, systemImage: iconName)
@@ -32,11 +31,10 @@ struct CardContainerView: View {
                 Spacer() // Pushes the chevron to the far right
 
                 // Conditionally display the chevron if onTap is provided
-                if onTap != nil {
-                    Image(systemName: "chevron.right")
-                        .foregroundStyle(.secondary) // Style the chevron consistently
-                    // Add padding if needed, e.g., .padding(.leading)
-                }
+
+                Image(systemName: "chevron.right")
+                    .foregroundStyle(.secondary) // Style the chevron consistently
+                // Add padding if needed, e.g., .padding(.leading)
             }
             RoundedRectangle(cornerRadius: 22)
                 .frame(maxWidth: .infinity)
@@ -53,18 +51,13 @@ struct CardContainerView: View {
 
         // Apply the tap gesture to the entire VStack (the card area)
         // The gesture is added unconditionally, but the action only runs if onTap is not nil
-        .onTapGesture {
-            onTap?() // Safely execute the closure if it exists
-        }
     }
 }
 
 #Preview {
     // Wrap previews in a container for better visualization
     VStack(spacing: 20) {
-        CardContainerView(iconName: "figure.walk", title: "Steps", subTitle: "Avg: 10K Steps", onTap: {
-            print("Steps card tapped!") // Example action
-        })
+        CardContainerView(iconName: "figure.walk", title: "Steps", subTitle: "Avg: 10K Steps")
     }
     .padding() // Add padding around the preview content
 }
